@@ -1,0 +1,102 @@
+Sure, I'll explain each line of the code:
+
+1. `import pandas as pd`: Imports the pandas library and aliases it as `pd` for easier reference in the code.
+
+2. `import matplotlib.pyplot as plt`: Imports the pyplot module from the matplotlib library and aliases it as `plt` for easier reference in the code.
+
+3. `import seaborn as sns`: Imports the seaborn library and aliases it as `sns` for easier reference in the code.
+
+4. `df = pd.read_csv('student_performance.csv')`: Reads the CSV file 'student_performance.csv' into a pandas DataFrame named `df`.
+
+5. `plt.figure(figsize=(8, 6))`: Creates a new figure with a specific size for the following plot.
+
+6. `sns.histplot(data=df, x='gender', bins=2, discrete=True)`: Creates a histogram plot for the 'gender' column in the DataFrame `df`, with 2 bins (bars) and discrete set to True (since gender is categorical).
+
+7. `plt.title('Histogram of Gender')`: Sets the title of the plot to 'Histogram of Gender'.
+
+8. `plt.show()`: Displays the plot.
+
+9. Repeat steps 5-8 for the 'math_score' and 'reading_score' histograms, with appropriate titles and column names.
+
+10. `plt.figure(figsize=(10, 6))`: Creates a new figure with a specific size for the following plot (a boxplot).
+
+11. `sns.boxplot(data=df[['math_score', 'reading_score']])`: Creates a boxplot for the 'math_score' and 'reading_score' columns in the DataFrame `df` to check for outliers.
+
+12. `plt.title('Boxplot of Math and Reading Scores')`: Sets the title of the plot to 'Boxplot of Math and Reading Scores'.
+
+13. `plt.show()`: Displays the plot.
+
+14. `df = df[['gender', 'test_preparation_course', 'math_score', 'reading_score', 'writing_score']]`: Removes all columns from the DataFrame `df` except for 'gender', 'test_preparation_course', 'math_score', 'reading_score', and 'writing_score'.
+
+15. `print(df.isnull().sum())`: Prints the sum of null or NaN values in each column of the DataFrame `df`.
+
+16. `df['total_score'] = df['math_score'] + df['reading_score'] + df['writing_score']`: Adds a new column 'total_score' to the DataFrame `df` containing the sum of 'math_score', 'reading_score', and 'writing_score'.
+
+17. `df['average_score'] = df['total_score'] / 3`: Adds a new column 'average_score' to the DataFrame `df` containing the average of 'math_score', 'reading_score', and 'writing_score'.
+
+18. `plt.figure(figsize=(8, 6))`: Creates a new figure with a specific size for the following bar plot.
+
+19. `sns.barplot(data=df, x='gender', y='average_score', estimator=sum)`: Creates a bar plot showing the total average score by gender, using the sum as the estimator.
+
+20. `plt.title('Total Average Score by Gender')`: Sets the title of the plot to 'Total Average Score by Gender'.
+
+21. `plt.show()`: Displays the plot.
+
+22. Repeat steps 18-21 for the bar plot showing the total average score by test preparation course completion.
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('student_performance.csv')
+
+# Plot histogram for gender
+plt.figure(figsize=(8, 6))
+sns.histplot(data=df, x='gender', bins=2, discrete=True)
+plt.title('Histogram of Gender')
+plt.show()
+
+# Plot histogram for math_score
+plt.figure(figsize=(8, 6))
+sns.histplot(data=df, x='math_score', bins=10, kde=True)
+plt.title('Histogram of Math Scores')
+plt.show()
+
+# Plot histogram for reading_score
+plt.figure(figsize=(8, 6))
+sns.histplot(data=df, x='reading_score', bins=10, kde=True)
+plt.title('Histogram of Reading Scores')
+plt.show()
+
+# Use boxplot to check for outliers in math_score and reading_score
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df[['math_score', 'reading_score']])
+plt.title('Boxplot of Math and Reading Scores')
+plt.show()
+
+# Remove all other columns except specified
+df = df[['gender', 'test_preparation_course', 'math_score', 'reading_score', 'writing_score']]
+
+# Check for null or NaN values
+print(df.isnull().sum())
+
+# Calculate total score
+df['total_score'] = df['math_score'] + df['reading_score'] + df['writing_score']
+
+# Calculate average score
+df['average_score'] = df['total_score'] / 3
+
+# Data visualization
+# Average score by gender
+plt.figure(figsize=(8, 6))
+sns.barplot(data=df, x='gender', y='average_score', estimator=sum)
+plt.title('Total Average Score by Gender')
+plt.show()
+
+# Average score by test_preparation_course
+plt.figure(figsize=(8, 6))
+sns.barplot(data=df, x='test_preparation_course', y='average_score', estimator=sum)
+plt.title('Total Average Score by Test Preparation Course Completion')
+plt.show()
